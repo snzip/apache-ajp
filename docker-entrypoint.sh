@@ -1,8 +1,6 @@
 #!/bin/bash
-# NODES=$1
-#192.15.123.232:1234,123.15.123.232:1234
-# echo $NODES
-# echo  111111111111111111111111111111111111111111111111
+# NODES=192.15.123.232:1234,123.15.123.232:1234 
+
 set -e
 
 output='/etc/libapache2-mod-jk/workers.properties'
@@ -26,6 +24,7 @@ if [ ! -z "$NODES" ]; then
         IFS=':' read -r -a NODE <<< "$i"
         echo worker.node${seq}_worker.host=${NODE[0]} >> $output
         echo worker.node${seq}_worker.port=${NODE[1]} >> $output
+        echo worker.node${seq}_worker.sticky_session=1 >> $output 
  
         # for j in "${NODE[@]}"; do
         #     echo "$j"  
